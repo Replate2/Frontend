@@ -1,4 +1,7 @@
 import React from "react";
+import Profile from "./profile";
+import ProfileEdit from "./profileEdit";
+import PickupList from "./pickupList";
 
 // volunteer page [state: pickups?, profile]
 //   view open pickups
@@ -11,6 +14,10 @@ const Volunteer = () => {
     return(
         <div>
             Main page for logged-in volunteers.
+            <Profile />
+            <ProfileEdit />
+            <PickupList />
+            <PickupList />
         </div>
     );
 }

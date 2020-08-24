@@ -1,4 +1,4 @@
-theme = {
+const theme = {
     backgroundColor: "pink",
     textColor: "blue",
 }
