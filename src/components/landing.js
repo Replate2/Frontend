@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 
 // landing page (fake login buttons for donors and volunteers)
 
-// donor page [state: pickups, donor profile]
-
 const Landing = () => {
     return(
         <div>

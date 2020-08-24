@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Profile from "./profile";
 import ProfileEdit from "./profileEdit";
 import PickupList from "./pickupList";
@@ -13,25 +13,38 @@ import Nav from "./nav";
 //   create/edit pickup
 
 const Donor = () => {
+    const [profile, setProfile] = useState({name: "jdoe", displayName: "John Doe", phone: "1234567890", address: "1 Main St."});
+    const [profileErrors, setProfileErrors] = useState({name: "", displayName: "", phone: ""});
+    const [userID, setUserID] = useState(1);
+
+    const updateProfile = (name, value) => {
+        setProfile({...profile, [name]: value});
+        // validation here
+    }
+
+    const saveProfile = () => {}; // send data to API
+
+    // useEffect to send a GET for data
+
     return(
         <div>
             <Nav role="donor" />
             <Switch>
                 <Route path="/donor/profile/edit">
                     <h2>Edit profile</h2>
-                    <ProfileEdit />
+                    <ProfileEdit profile={profile} errors={profileErrors} updateProfile={updateProfile} saveProfile={saveProfile} />
                 </Route>
                 <Route path="/donor/profile">
                     <h2>Your profile</h2>
-                    <Profile />
+                    <Profile profile={profile} />
                 </Route>
                 <Route path="/donor/new">
                     <h2>Request pickup</h2>
-                    <PickupEdit />
+                    <PickupEdit pickup={{}} />
                 </Route>
                 <Route path="/donor/active">
                     <h2>Active pickups</h2>
-                    <PickupList />
+                    <PickupList userID={userID} />
                 </Route>
             </Switch>
         </div>
