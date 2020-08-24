@@ -26,7 +26,7 @@ function App() {
   return (
     <div>
       <Switch>
-        <Route path="/donate">
+        <Route path="/donor">
           <Donor />
         </Route>
         <Route path="/volunteer">

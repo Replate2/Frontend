@@ -3,7 +3,7 @@ import {Switch, Route} from "react-router-dom";
 import Profile from "./profile";
 import ProfileEdit from "./profileEdit";
 import PickupList from "./pickupList";
-import VolunteerNav from "./volunteerNav";
+import Nav from "./nav";
 
 // volunteer page [state: pickups?, profile]
 //   view open pickups
@@ -15,7 +15,7 @@ import VolunteerNav from "./volunteerNav";
 const Volunteer = () => {
     return(
         <div>
-            <VolunteerNav />
+            <Nav role="volunteer" />
             <Switch>
                 <Route path="/volunteer/profile/edit">
                     <h2>Edit profile</h2>

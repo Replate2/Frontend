@@ -3,16 +3,16 @@ import { NavLink } from "react-router-dom";
 
 // view profile {props: profile data, profile type (donor or volunteer)}
 
-const VolunteerNav = () => {
+const Nav = ({role}) => {
     return(
-        <div>
-            Nav bar for volunteers.
+        <nav>
             <NavLink to="../active/">Active</NavLink>
-            <NavLink to="../browse/">Browse</NavLink>
+            {role === "volunteer" && <NavLink to="../browse/">Browse</NavLink>}
+            {role === "donor" && <NavLink to="../new/">Create</NavLink>}
             <NavLink to="../profile/">Profile</NavLink>
             <NavLink to="/">Log out</NavLink>
-        </div>
+        </nav>
     );
 }
 
-export default VolunteerNav;
+export default Nav;
