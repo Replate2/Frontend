@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 // edit profile {props: profile data, profile type (donor or volunteer), update state method, commit edit method}
 
@@ -19,6 +20,8 @@ const ProfileEdit = () => {
                 Address (donors only)
                 <input name="address" />
             </label>
+            <button>Save</button>
+            <Link to=".">Cancel</Link>
         </form>
     );
 }

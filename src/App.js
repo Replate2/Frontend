@@ -1,7 +1,8 @@
-import React from 'react';
-import Landing from './components/landing';
+import React from "react";
+import {Switch, Route} from "react-router-dom";
+import Landing from "./components/landing";
 import Donor from "./components/donor";
-import Volunteer from './components/volunteer';
+import Volunteer from "./components/volunteer";
 
 
 // APP STRUCTURE:
@@ -24,9 +25,17 @@ import Volunteer from './components/volunteer';
 function App() {
   return (
     <div>
-      <Landing />
-      <Donor />
-      <Volunteer />
+      <Switch>
+        <Route path="/donate">
+          <Donor />
+        </Route>
+        <Route path="/volunteer">
+          <Volunteer />
+        </Route>
+        <Route path="/">
+          <Landing />
+        </Route>
+      </Switch>
     </div>
   );
 }
