@@ -10,7 +10,7 @@ const Landing = () => {
         <div>
             Initial landing page
             <Link to="donor/active/"><button>Log in as donor</button></Link>
-            <Link to="donor/volunteer/"><button>Log in as volunteer</button></Link>
+            <Link to="volunteer/active/"><button>Log in as volunteer</button></Link>
         </div>
     );
 }
