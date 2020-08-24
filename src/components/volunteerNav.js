@@ -7,9 +7,9 @@ const VolunteerNav = () => {
     return(
         <div>
             Nav bar for volunteers.
-            <NavLink to=".">Signed up</NavLink>
-            <NavLink to="profile">Profile</NavLink>
-            <NavLink to="browse">Browse</NavLink>
+            <NavLink to="../active/">Active</NavLink>
+            <NavLink to="../browse/">Browse</NavLink>
+            <NavLink to="../profile/">Profile</NavLink>
             <NavLink to="/">Log out</NavLink>
         </div>
     );
