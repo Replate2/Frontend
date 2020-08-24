@@ -1,6 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
 
 // APP STRUCTURE:
 
@@ -17,10 +16,6 @@ import './App.css';
 //     view assigned pickups
 //       single pickup ("you know what nevermind" button)
 //     view/edit profile
-
-
-
-
 
 
 function App() {
