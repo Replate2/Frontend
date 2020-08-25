@@ -15,6 +15,8 @@ import Nav from "./nav";
 const Donor = () => {
     const [profile, setProfile] = useState({name: "jdoe", displayName: "John Doe", phone: "1234567890", address: "1 Main St."});
     const [profileErrors, setProfileErrors] = useState({name: "", displayName: "", phone: ""});
+    const [editedPickup, setEditedPickup] = useState({date: "", type: "", qty: ""});
+    const [pickupErrors, setPickupErrors] = useState({date: "", type: "", qty: ""});
     const [userID, setUserID] = useState(1);
 
     const updateProfile = (name, value) => {
@@ -22,7 +24,14 @@ const Donor = () => {
         // validation here
     }
 
+    const updatePickup = (name, value) => {
+        setEditedPickup({...editedPickup, [name]: value});
+        // validation here
+    }
+
     const saveProfile = () => {}; // send data to API
+
+    const savePickup = () => {};
 
     // useEffect to send a GET for data
 
@@ -40,11 +49,11 @@ const Donor = () => {
                 </Route>
                 <Route path="/donor/new">
                     <h2>Request pickup</h2>
-                    <PickupEdit pickup={{}} />
+                    <PickupEdit pickup={editedPickup} errors={pickupErrors} updatePickup={updatePickup} savePickup={editedPickup} />
                 </Route>
                 <Route path="/donor/active">
                     <h2>Active pickups</h2>
-                    <PickupList userID={userID} />
+                    <PickupList donorID={userID} />
                 </Route>
             </Switch>
         </div>

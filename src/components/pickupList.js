@@ -32,21 +32,62 @@ const dummyData = [
     },
 ];
 
-const PickupList = ({userID, buttonType}) => {
+const PickupList = ({volunteerID, donorID, userID}) => {
     const [pickups, setPickups] = useState([]);
-    const [editID, setEditID] = useState(-1);
+    const [allPickups, setAllPickups] = useState(dummyData);
     
     useEffect(() => {
-        setPickups(dummyData.filter(item => item.donorID === userID || item.volunteerID === userID));
-    }, [userID]);
+        if(donorID >= -1){
+            //console.log("filtering by donor ID");
+            //console.log(dummyData.filter(item => item.donorID === donorID));
+            setPickups(allPickups.filter(item => item.donorID === donorID));
+        }
+        else if(volunteerID >= -1){
+            //console.log("filtering by volunteer ID");
+            //console.log(dummyData.filter(item => item.volunteerID === volunteerID));
+            setPickups(allPickups.filter(item => item.volunteerID === volunteerID));
+        }
+    }, [volunteerID, donorID, allPickups]);
+
+    const applyVolunteerID = (pickupID) => {
+        //todo: API call
+
+        setAllPickups(allPickups.map(item => {
+            if(item.id === pickupID)
+            {
+                item.volunteerID = userID;
+                console.log(`Setting pickup ${pickupID} to volunteer ${userID}`);
+            }
+            return item;
+        }));
+    }
+
+    const startEdit = (pickupID) => {
+        // fill in the editing view state with the details of pickup #"pickupID"
+        // switch to the editing view
+    }
+
+    const buttonAction = () => {
+        if(volunteerID !== undefined) return applyVolunteerID;
+        else return startEdit;
+    }
+
+    const buttonText = () => {
+        if(volunteerID === -1){
+            return "Sign Up";
+        }
+        else if(volunteerID > -1){
+            return "Cancel";
+        }
+        else return "Edit";
+    }
 
     return(
         <div>
+            {volunteerID}
+            {`${donorID}`}
             {pickups.map(item =>
-                item.id === editID ?
-                <PickupEdit key={item.id} pickup={item} setEditID = {setEditID} setPickups = {setPickups} />
-                :
-                <Pickup key={item.id} pickup={item} setEditID = {setEditID} buttonType={buttonType} />
+                <Pickup key={item.id} pickup={item} buttonAction={buttonAction()} buttonText={buttonText()} />
             )}
         </div>
     );

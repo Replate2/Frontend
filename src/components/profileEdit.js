@@ -33,7 +33,7 @@ const ProfileEdit = ({profile, errors, updateProfile, saveProfile}) => {
                 <p>{errors.displayName}</p>
                 <p>{errors.phone}</p>
                 <p>{errors.address}</p>
-            </div>            
+            </div>
             <button onClick={wrappedSave}>Save</button>
             <Link to="."><button>Cancel</button></Link>
         </form>

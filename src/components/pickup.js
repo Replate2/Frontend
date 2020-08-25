@@ -2,8 +2,13 @@ import React from "react";
 
 // view single pickup {props: pickup data, button type to show}
 
-const Pickup = ({pickup, buttonType}) => {
+const Pickup = ({pickup, buttonAction, buttonText}) => {
     // todo: fetch the vitals of the donor and volunteer from `donorID` and `volunteerID`
+
+    const wrappedButtonAction = () => {
+        console.log(`WBA ID=${pickup.id}`);
+        buttonAction(pickup.id);
+    }
 
     return(
         <div>
@@ -17,11 +22,15 @@ const Pickup = ({pickup, buttonType}) => {
                 <p>address</p>*/}
             </div>
             <div>
-                volunteer no. {pickup.volunteerID}
+                {pickup.volunteerID > -1 ?
+                `volunteer no. ${pickup.volunteerID}`
+                :
+                "No volunteer selected."
+                }
                 {/*<p>volunteer's display name</p>
                 <p>phone number</p>*/}
             </div>
-            <button>{buttonType}</button>
+            <button onClick={wrappedButtonAction}>{buttonText}</button>
         </div>
     );
 }

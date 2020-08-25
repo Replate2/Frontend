@@ -40,11 +40,11 @@ const Volunteer = () => {
                 </Route>
                 <Route path="/volunteer/browse">
                     <h2>Browse open pickups</h2>
-                    <PickupList userID={-1} buttonType="accept" />
+                    <PickupList volunteerID={-1} userID={userID} />
                 </Route>
                 <Route path="/volunteer/active">
                     <h2>Your assigned pickups</h2>
-                    <PickupList userID={userID} buttonType="cancel" />
+                    <PickupList volunteerID={userID} userID={-1} />
                 </Route>
             </Switch>
         </div>
