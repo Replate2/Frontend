@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link, useParams, useHistory} from "react-router-dom";
 
 // view single pickup {props: pickup data, commit action}
 
@@ -8,6 +8,8 @@ const PickupEdit = () => {
     const [errors, setErrors] = useState({});
 
     const {id} = useParams();
+
+    let history = useHistory();
 
     useEffect(() => {
         if(id !== undefined)
@@ -29,6 +31,7 @@ const PickupEdit = () => {
     const wrappedSave = event => {
         event.preventDefault();
         // do API call
+        history.push("../active/");
     }
 
     return(
@@ -51,7 +54,7 @@ const PickupEdit = () => {
                 <p>{errors.qty}</p>
             </div>
             <button onClick={wrappedSave}>Save</button>
-            <Link to="."><button>Cancel</button></Link>
+            <Link to="../active/"><button>Cancel</button></Link>
         </form>
     );
 }
