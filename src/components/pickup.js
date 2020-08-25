@@ -6,7 +6,7 @@ const Pickup = ({pickup, buttonAction, buttonText}) => {
     // todo: fetch the vitals of the donor and volunteer from `donorID` and `volunteerID`
 
     const wrappedButtonAction = () => {
-        console.log(`WBA ID=${pickup.id}`);
+        //console.log(`WBA ID=${pickup.id}`);
         buttonAction(pickup.id);
     }
 

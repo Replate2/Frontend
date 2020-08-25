@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Pickup from "./pickup";
-import PickupEdit from "./pickupEdit";
 
 // view pickups {props: filtered list of pickups; type of button to display, can edit}
 //   single pickup ("you know what nevermind" button)
@@ -36,6 +36,8 @@ const PickupList = ({volunteerID, donorID, userID}) => {
     const [pickups, setPickups] = useState([]);
     const [allPickups, setAllPickups] = useState(dummyData);
     
+    let history = useHistory();
+
     useEffect(() => {
         if(donorID >= -1){
             //console.log("filtering by donor ID");
@@ -63,12 +65,14 @@ const PickupList = ({volunteerID, donorID, userID}) => {
     }
 
     const startEdit = (pickupID) => {
+        console.log(`Start editing #${pickupID}`)
         // fill in the editing view state with the details of pickup #"pickupID"
         // switch to the editing view
+        history.push(`../edit/${pickupID}`);
     }
 
     const buttonAction = () => {
-        if(volunteerID !== undefined) return applyVolunteerID;
+        if(volunteerID >= -1) return applyVolunteerID;
         else return startEdit;
     }
 
@@ -84,8 +88,8 @@ const PickupList = ({volunteerID, donorID, userID}) => {
 
     return(
         <div>
-            {volunteerID}
-            {`${donorID}`}
+            {/*volunteerID}
+            {`${donorID}`*/}
             {pickups.map(item =>
                 <Pickup key={item.id} pickup={item} buttonAction={buttonAction()} buttonText={buttonText()} />
             )}
