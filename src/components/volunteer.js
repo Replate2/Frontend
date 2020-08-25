@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Switch, Route} from "react-router-dom";
+import {Switch, Route, useHistory} from "react-router-dom";
 import Profile from "./profile";
 import ProfileEdit from "./profileEdit";
 import PickupList from "./pickupList";
@@ -14,15 +14,16 @@ import Nav from "./nav";
 
 const Volunteer = () => {
     const [profile, setProfile] = useState({name: "jdoe", displayName: "John Doe", phone: "1234567890"});
-    const [profileErrors, setProfileErrors] = useState({name: "", displayName: "", phone: ""});
-    const [userID, setUserID] = useState(0);
+    const [userID, setUserID] = useState(0); // eventually userID should come from the authenticator somehow
 
-    const updateProfile = (name, value) => {
-        setProfile({...profile, [name]: value});
-        // validation here
-    }
+    let history = useHistory();
 
-    const saveProfile = () => {}; // send data to API and then return to the previous page (volunteer/profile/)
+    const saveProfile = (newProfile) => {
+        // send data to API and amend profile on reply
+        setProfile(newProfile);
+        
+        history.push("../profile/");
+    };
 
     // useEffect to send a GET for data
 
@@ -32,7 +33,7 @@ const Volunteer = () => {
             <Switch>
                 <Route path="/volunteer/profile/edit">
                     <h2>Edit profile</h2>
-                    <ProfileEdit profile={profile} errors={profileErrors} updateProfile={updateProfile} saveProfile={saveProfile} />
+                    <ProfileEdit profile={profile} saveProfile={saveProfile} />
                 </Route>
                 <Route path="/volunteer/profile">
                     <h2>Your profile</h2>
