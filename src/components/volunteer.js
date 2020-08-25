@@ -4,8 +4,6 @@ import Profile from "./profile";
 import ProfileEdit from "./profileEdit";
 import PickupList from "./pickupList";
 import Nav from "./nav";
-import * as Yup from "yup";
-import profileSchema from "../data/profileSchema";
 
 // volunteer page [state: pickups?, profile]
 //   view open pickups
@@ -16,23 +14,16 @@ import profileSchema from "../data/profileSchema";
 
 const Volunteer = () => {
     const [profile, setProfile] = useState({name: "jdoe", displayName: "John Doe", phone: "1234567890"});
-    const [profileErrors, setProfileErrors] = useState({name: "", displayName: "", phone: ""});
-    const [userID, setUserID] = useState(0);
+    const [userID, setUserID] = useState(0); // eventually userID should come from the authenticator somehow
 
     let history = useHistory();
 
-    const updateProfile = (name, value) => {
-        setProfile({...profile, [name]: value});
-
-        Yup.reach(profileSchema, name)
-        .validate(value)
-        .then(() => setProfileErrors({...profileErrors, [name]: ""}))
-        .catch(error => setProfileErrors({...profileErrors, [name]: error.errors[0]}))
-    }
-
-    const saveProfile = () => {
-        history.push("../profile");
-    }; // send data to API and then return to the previous page (volunteer/profile/)
+    const saveProfile = (newProfile) => {
+        // send data to API and amend profile on reply
+        setProfile(newProfile);
+        
+        history.push("../profile/");
+    };
 
     // useEffect to send a GET for data
 
@@ -42,7 +33,7 @@ const Volunteer = () => {
             <Switch>
                 <Route path="/volunteer/profile/edit">
                     <h2>Edit profile</h2>
-                    <ProfileEdit profile={profile} errors={profileErrors} updateProfile={updateProfile} saveProfile={saveProfile} />
+                    <ProfileEdit profile={profile} saveProfile={saveProfile} />
                 </Route>
                 <Route path="/volunteer/profile">
                     <h2>Your profile</h2>
