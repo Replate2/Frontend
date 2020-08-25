@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import {Switch, Route} from "react-router-dom";
+import {Switch, Route, useHistory} from "react-router-dom";
 import Profile from "./profile";
 import ProfileEdit from "./profileEdit";
 import PickupList from "./pickupList";
 import Nav from "./nav";
+import * as Yup from "yup";
+import profileSchema from "../data/profileSchema";
 
 // volunteer page [state: pickups?, profile]
 //   view open pickups
@@ -17,12 +19,20 @@ const Volunteer = () => {
     const [profileErrors, setProfileErrors] = useState({name: "", displayName: "", phone: ""});
     const [userID, setUserID] = useState(0);
 
+    let history = useHistory();
+
     const updateProfile = (name, value) => {
         setProfile({...profile, [name]: value});
-        // validation here
+
+        Yup.reach(profileSchema, name)
+        .validate(value)
+        .then(() => setProfileErrors({...profileErrors, [name]: ""}))
+        .catch(error => setProfileErrors({...profileErrors, [name]: error.errors[0]}))
     }
 
-    const saveProfile = () => {}; // send data to API and then return to the previous page (volunteer/profile/)
+    const saveProfile = () => {
+        history.push("../profile");
+    }; // send data to API and then return to the previous page (volunteer/profile/)
 
     // useEffect to send a GET for data
 
