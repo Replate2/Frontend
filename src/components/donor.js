@@ -3,7 +3,7 @@ import Profile from "./profile";
 import ProfileEdit from "./profileEdit";
 import PickupList from "./pickupList";
 import PickupEdit from "./pickupEdit";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import Nav from "./nav";
 
 // donor page [state: pickups, donor profile]
@@ -14,15 +14,16 @@ import Nav from "./nav";
 
 const Donor = () => {
     const [profile, setProfile] = useState({name: "jdoe", displayName: "John Doe", phone: "1234567890", address: "1 Main St."});
-    const [profileErrors, setProfileErrors] = useState({name: "", displayName: "", phone: ""});
     const [userID, setUserID] = useState(1);
 
-    const updateProfile = (name, value) => {
-        setProfile({...profile, [name]: value});
-        // validation here
-    }
+    let history = useHistory();
 
-    const saveProfile = () => {}; // send data to API
+    const saveProfile = (newProfile) => {
+        // send data to API and amend profile on reply
+        setProfile(newProfile);
+        
+        history.push("../profile/");
+    };
 
     // useEffect to send a GET for data
 
@@ -32,7 +33,7 @@ const Donor = () => {
             <Switch>
                 <Route path="/donor/profile/edit">
                     <h2>Edit profile</h2>
-                    <ProfileEdit profile={profile} errors={profileErrors} updateProfile={updateProfile} saveProfile={saveProfile} />
+                    <ProfileEdit profile={profile} saveProfile={saveProfile} />
                 </Route>
                 <Route path="/donor/profile">
                     <h2>Your profile</h2>

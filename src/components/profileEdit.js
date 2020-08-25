@@ -32,8 +32,6 @@ const ProfileEdit = ({profile, saveProfile}) => {
         profileSchema.isValid(profileForm).then(valid => setButtonEnabled(valid));
     }, [profileForm]);
 
-
-
     return(
         <form onSubmit={wrappedSave}>
             <p>{profile.name /* can't be edited */}</p>

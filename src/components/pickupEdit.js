@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {Link, useParams, useHistory} from "react-router-dom";
+import * as Yup from "yup";
+import pickupSchema from "../data/pickupSchema";
 
 // view single pickup {props: pickup data, commit action}
 
 const PickupEdit = () => {
     const [pickup, setPickup] = useState({date: "", type: "", qty: ""});
     const [errors, setErrors] = useState({});
+    const [buttonEnabled, setButtonEnabled] = useState(false);
 
     const {id} = useParams();
 
@@ -23,9 +26,17 @@ const PickupEdit = () => {
         setPickup({id: id, date: "", type: `editing existing pickup ${id}`, qty: ""});
     }
 
+    const update = (name, value) => {
+        setPickup({...pickup, [name]: value})
+
+        Yup.reach(pickupSchema, name)
+        .validate(value)
+        .then(() => setErrors({...errors, [name]: ""}))
+        .catch(error => setErrors({...errors, [name]: error.errors[0]}))
+    }
+
     const wrappedUpdate = event => {
-        setPickup({...pickup, [event.target.name]: event.target.value})
-        // validation here
+        update(event.target.name, event.target.value)
     }
 
     const wrappedSave = event => {
@@ -34,11 +45,15 @@ const PickupEdit = () => {
         history.push("../active/");
     }
 
+    useEffect(() => {
+        pickupSchema.isValid(pickup).then(valid => setButtonEnabled(valid));
+    }, [pickup]);
+
     return(
         <form onSubmit={wrappedSave}>
             <label>
                 Date and Time
-                <input name="date" value={pickup.date} onChange={wrappedUpdate} />
+                <input type="date" min="2020-01-01" name="date" value={pickup.date} onChange={wrappedUpdate} />
             </label>
             <label>
                 Description
@@ -53,7 +68,7 @@ const PickupEdit = () => {
                 <p>{errors.type}</p>
                 <p>{errors.qty}</p>
             </div>
-            <button onClick={wrappedSave}>Save</button>
+            <button onClick={wrappedSave} disabled={!buttonEnabled}>Save</button>
             <Link to="../active/"><button>Cancel</button></Link>
         </form>
     );
