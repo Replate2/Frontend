@@ -6,7 +6,7 @@ import PickupEdit from "./pickupEdit";
 import { Switch, Route, useHistory } from "react-router-dom";
 import Nav from "./nav";
 import StyledMain from "./styled/StyledMain";
-//import Axios from "axios";
+import Axios from "axios";
 
 // donor page [state: pickups, donor profile]
 //   view pickups (default view; "create new" button)
@@ -21,34 +21,27 @@ const defaultProfile = role => {
 
 const Main = ({role}) => {
     const [profile, setProfile] = useState({});
-    const [userID, setUserID] = useState(1);
 
     let history = useHistory();
 
     useEffect(() => {
-        //console.log(defaultProfile(role));
         setProfile(defaultProfile(role));
-        setUserID(defaultProfile(role).id);
+
+        // if APIs become suitable in the future then fetch initial data from them
+        /*Axios.get(`https://blue-replate.herokuapp.com/users/${role === donor ? 1 : 0}`)
+        .then(response => setProfile(response.data))
+        .catch(error => console.log(error));*/
     }, [role]);
 
     const saveProfile = (newProfile) => {
         // send data to API and amend profile on reply
-        setProfile(newProfile);
-        
-        history.push("../profile/");
+        Axios.post("https://reqres.in/api/users", newProfile)
+        .then(response => {
+          setProfile(response.data);
+          history.push("../profile/");
+        })
+        .catch(error => console.log(error));
     };
-
-/*    useEffect(() => {
-        // test APIs
-        Axios.get("https://blue-replate.herokuapp.com/leftovers")
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
-        Axios.get("https://blue-replate.herokuapp.com/locations")
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
-    }, []);*/
-
-    // useEffect to send a GET for data
 
     return(
         <StyledMain>
@@ -75,12 +68,12 @@ const Main = ({role}) => {
                 {role === "volunteer" && 
                 <Route path={`/${role}/browse`}>
                     <h2>Browse open pickups</h2>
-                    <PickupList role="browse" userID={userID} />
+                    <PickupList role="browse" userID={profile.id} />
                 </Route>
                 }
                 <Route path={`/${role}/active`}>
                     <h2>Active pickups</h2>
-                    <PickupList role={role} userID={userID} />
+                    <PickupList role={role} userID={profile.id} />
                 </Route>
             </Switch>
         </StyledMain>
