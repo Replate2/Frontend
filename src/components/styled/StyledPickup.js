@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledProfile = styled.div`
+const StyledPickup = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,7 +8,8 @@ const StyledProfile = styled.div`
     color: ${props => props.theme.color.section};
     background-color: ${props => props.theme.background.section};
 
-    padding: ${props => props.theme.margin.medium} ${props => props.theme.margin.large};
+    padding: ${props => props.theme.margin.small} ${props => props.theme.margin.medium};
+    margin-bottom: ${props => props.theme.margin.medium};
 
     p, input{
         margin-bottom: ${props => props.theme.margin.small};
@@ -32,4 +33,4 @@ const StyledProfile = styled.div`
     }
 `;
 
-export default StyledProfile;
+export default StyledPickup;

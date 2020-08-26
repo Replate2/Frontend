@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {Link, useParams, useHistory} from "react-router-dom";
 import * as Yup from "yup";
 import pickupSchema from "../data/pickupSchema";
+import StyledProfile from "./styled/StyledProfile";
 
 // view single pickup {props: pickup data, commit action}
 
@@ -51,25 +52,29 @@ const PickupEdit = () => {
 
     return(
         <form onSubmit={wrappedSave}>
-            <label>
-                Date and Time
-                <input type="date" min="2020-01-01" name="date" value={pickup.date} onChange={wrappedUpdate} />
-            </label>
-            <label>
-                Description
-                <input name="type" value={pickup.type} onChange={wrappedUpdate} />
-            </label>
-            <label>
-                Quantity
-                <input name="qty" value={pickup.qty} onChange={wrappedUpdate} />
-            </label>
-            <div className="errorList">
-                <p>{errors.date}</p>
-                <p>{errors.type}</p>
-                <p>{errors.qty}</p>
-            </div>
-            <button onClick={wrappedSave} disabled={!buttonEnabled}>Save</button>
-            <Link to="../active/"><button>Cancel</button></Link>
+            <StyledProfile>
+                <label>
+                    Date and Time
+                    <input type="date" min="2020-01-01" name="date" value={pickup.date} onChange={wrappedUpdate} />
+                </label>
+                <label>
+                    Description
+                    <input name="type" value={pickup.type} onChange={wrappedUpdate} />
+                </label>
+                <label>
+                    Quantity
+                    <input name="qty" value={pickup.qty} onChange={wrappedUpdate} />
+                </label>
+                <div className="errorList">
+                    <p>{errors.date}</p>
+                    <p>{errors.type}</p>
+                    <p>{errors.qty}</p>
+                </div>
+                <div>
+                    <button onClick={wrappedSave} disabled={!buttonEnabled}>Save</button>
+                    <Link to="../active/">Cancel</Link>
+                </div>
+            </StyledProfile>
         </form>
     );
 }
