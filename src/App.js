@@ -1,8 +1,7 @@
 import React from "react";
 import {Switch, Route} from "react-router-dom";
 import Landing from "./components/landing";
-import Donor from "./components/donor";
-import Volunteer from "./components/volunteer";
+import Main from "./components/main";
 import StyledApp from "./components/styled/StyledApp";
 
 // APP STRUCTURE:
@@ -21,16 +20,15 @@ import StyledApp from "./components/styled/StyledApp";
 //       single pickup ("you know what nevermind" button)
 //     view/edit profile
 
-
 function App() {
   return (
     <StyledApp>
       <Switch>
         <Route path="/donor">
-          <Donor />
+          <Main role="donor" />
         </Route>
         <Route path="/volunteer">
-          <Volunteer />
+          <Main role="volunteer" />
         </Route>
         <Route path="/">
           <Landing />

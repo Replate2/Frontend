@@ -10,8 +10,8 @@ const theme = {
         highlight: "white",
     },
     font: {
-        main: "font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 1.6rem",
-        header: "font-family: 'Yesteryear', cursive; font-size: 3.2rem",
+        main: "font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 2.4rem",
+        header: "font-family: 'Yesteryear', cursive; font-size: 4.8rem",
     },
     margin: {
         small: "0.5em",

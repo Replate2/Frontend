@@ -14,11 +14,22 @@ import Nav from "./nav";
 //   view/edit profile
 //   create/edit pickup
 
-const Donor = () => {
-    const [profile, setProfile] = useState({name: "jdoe", displayName: "John Doe", phone: "1234567890", address: "1 Main St."});
+const defaultProfile = role => {
+    if(role === "donor") return {name: "jdoe", displayName: "John Doe", phone: "1234567890", address: "1 Main St.", id: 1};
+    else return {name: "jdoe", displayName: "John Doe", phone: "1234567890", id: 0};
+}
+
+const Main = ({role}) => {
+    const [profile, setProfile] = useState({});
     const [userID, setUserID] = useState(1);
 
     let history = useHistory();
+
+    useEffect(() => {
+        console.log(defaultProfile(role));
+        setProfile(defaultProfile(role));
+        setUserID(defaultProfile(role).id);
+    }, [role]);
 
     const saveProfile = (newProfile) => {
         // send data to API and amend profile on reply
@@ -41,31 +52,39 @@ const Donor = () => {
 
     return(
         <div>
-            <Nav role="donor" />
+            <Nav role={role} />
             <Switch>
-                <Route path="/donor/profile/edit">
+                <Route path={`/${role}/profile/edit`}>
                     <h2>Edit profile</h2>
                     <ProfileEdit profile={profile} saveProfile={saveProfile} />
                 </Route>
-                <Route path="/donor/profile">
+                <Route path={`/${role}/profile`}>
                     <h2>Your profile</h2>
                     <Profile profile={profile} />
                 </Route>
-                <Route path="/donor/new">
+                {role === "donor" &&
+                <Route path={`/${role}/new`}>
                     <h2>Request pickup</h2>
                     <PickupEdit />
-                </Route>
-                <Route path="/donor/edit/:id">
+                </Route>}
+                {role === "donor" &&
+                <Route path={`/${role}/edit/:id`}>
                     <h2>Edit pickup</h2>
                     <PickupEdit />
+                </Route>}
+                {role === "volunteer" && 
+                <Route path={`/${role}/browse`}>
+                    <h2>Browse open pickups</h2>
+                    <PickupList role="browse" userID={userID} />
                 </Route>
-                <Route path="/donor/active">
+                }
+                <Route path={`/${role}/active`}>
                     <h2>Active pickups</h2>
-                    <PickupList donorID={userID} />
+                    <PickupList role={role} userID={userID} />
                 </Route>
             </Switch>
         </div>
     );
 }
 
-export default Donor;
+export default Main;
