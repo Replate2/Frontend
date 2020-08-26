@@ -6,9 +6,11 @@ const StyledApp = styled.div`
     background-color: ${props => props.theme.background.main};
     color: ${props => props.theme.color.main};
 
-    padding: ${props => props.theme.margin.large};
-
     ${props => props.theme.font.main};
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 export default StyledApp;

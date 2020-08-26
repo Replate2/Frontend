@@ -4,8 +4,8 @@ import ProfileEdit from "./profileEdit";
 import PickupList from "./pickupList";
 import PickupEdit from "./pickupEdit";
 import { Switch, Route, useHistory } from "react-router-dom";
-
 import Nav from "./nav";
+import StyledMain from "./styled/StyledMain";
 //import Axios from "axios";
 
 // donor page [state: pickups, donor profile]
@@ -51,7 +51,7 @@ const Main = ({role}) => {
     // useEffect to send a GET for data
 
     return(
-        <div>
+        <StyledMain>
             <Nav role={role} />
             <Switch>
                 <Route path={`/${role}/profile/edit`}>
@@ -83,7 +83,7 @@ const Main = ({role}) => {
                     <PickupList role={role} userID={userID} />
                 </Route>
             </Switch>
-        </div>
+        </StyledMain>
     );
 }
 
