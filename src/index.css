@@ -1,13 +1,13 @@
 * {
   margin: 0; padding: 0; box-sizing: border-box; line-height: 1;
-  margin: 2px; padding: 1px;
+  /*margin: 2px; padding: 1px;
   border: 1px solid blue;
-  background-color: white;
+  background-color: white;*/
 }
 
-*:hover{
+/**:hover{
   background-color: silver;
-}
+}*/
 
 html{
   font-size: 62.5%;

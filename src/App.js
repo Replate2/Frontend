@@ -3,7 +3,7 @@ import {Switch, Route} from "react-router-dom";
 import Landing from "./components/landing";
 import Donor from "./components/donor";
 import Volunteer from "./components/volunteer";
-
+import StyledApp from "./components/styled/StyledApp";
 
 // APP STRUCTURE:
 
@@ -24,7 +24,7 @@ import Volunteer from "./components/volunteer";
 
 function App() {
   return (
-    <div>
+    <StyledApp>
       <Switch>
         <Route path="/donor">
           <Donor />
@@ -36,7 +36,7 @@ function App() {
           <Landing />
         </Route>
       </Switch>
-    </div>
+    </StyledApp>
   );
 }
 

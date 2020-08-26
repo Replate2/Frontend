@@ -1,12 +1,12 @@
 const theme = {
     color: {
         main: "white",
-        section: "cbdac4",
-        highlight: "97b687",
+        section: "#cbdac4",
+        highlight: "#97b687",
     },
     background: {
-        main: "97b687",
-        section: "639450",
+        main: "#97b687",
+        section: "#639450",
         highlight: "white",
     },
     font: {
