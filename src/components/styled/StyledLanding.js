@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledPickup = styled.div`
+const StyledLanding = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,14 +8,14 @@ const StyledPickup = styled.div`
     color: ${props => props.theme.color.section};
     background-color: ${props => props.theme.background.section};
 
-    padding: ${props => props.theme.margin.small} ${props => props.theme.margin.medium};
-    margin-bottom: ${props => props.theme.margin.medium};
+    padding: ${props => props.theme.margin.large};
 
-    p, input{
-        margin-bottom: ${props => props.theme.margin.small};
+    h1{
+        ${props => props.theme.font.header};
+        margin-bottom: 0.75em;
     }
 
-    a, button{
+    button{
         ${props => props.theme.font.main};
         color: ${props => props.theme.color.highlight};
         background-color: ${props => props.theme.background.highlight};
@@ -24,14 +24,10 @@ const StyledPickup = styled.div`
         border: 2px solid currentColor;
 
         padding: 0 ${props => props.theme.margin.medium};
-        margin: 0 ${props => props.theme.margin.medium};
-        
-        cursor: pointer;
-    }
+        margin: ${props => props.theme.margin.small};
 
-    @media (max-width: 500px){
-        width: 100%;
+        cursor: pointer;
     }
 `;
 
-export default StyledPickup;
+export default StyledLanding;

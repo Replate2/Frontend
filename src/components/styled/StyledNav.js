@@ -22,6 +22,8 @@ const StyledNav = styled.nav`
         border-color: currentColor;
         border-width: 1px 1px 1px 0px;
         text-align: center;
+
+        cursor: pointer;
     }
 
     a:first-child{

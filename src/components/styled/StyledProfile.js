@@ -25,6 +25,7 @@ const StyledProfile = styled.div`
         padding: 0 ${props => props.theme.margin.medium};
         margin: 0 ${props => props.theme.margin.medium};
         
+        cursor: pointer;
     }
 
     @media (max-width: 500px){
