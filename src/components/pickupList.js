@@ -32,24 +32,23 @@ const dummyData = [
     },
 ];
 
-const PickupList = ({volunteerID, donorID, userID}) => {
+const PickupList = ({role, userID}) => {
     const [pickups, setPickups] = useState([]);
     const [allPickups, setAllPickups] = useState(dummyData);
     
     let history = useHistory();
 
     useEffect(() => {
-        if(donorID >= -1){
-            //console.log("filtering by donor ID");
-            //console.log(dummyData.filter(item => item.donorID === donorID));
-            setPickups(allPickups.filter(item => item.donorID === donorID));
+        if(role === "donor"){
+            setPickups(allPickups.filter(item => item.donorID === userID));
         }
-        else if(volunteerID >= -1){
-            //console.log("filtering by volunteer ID");
-            //console.log(dummyData.filter(item => item.volunteerID === volunteerID));
-            setPickups(allPickups.filter(item => item.volunteerID === volunteerID));
+        else if(role === "volunteer"){
+            setPickups(allPickups.filter(item => item.volunteerID === userID));
         }
-    }, [volunteerID, donorID, allPickups]);
+        else if(role === "browse"){
+            setPickups(allPickups.filter(item => item.volunteerID === -1));
+        }
+    }, [userID, role, allPickups]);
 
     const applyVolunteerID = (pickupID) => {
         //todo: API call
@@ -57,8 +56,15 @@ const PickupList = ({volunteerID, donorID, userID}) => {
         setAllPickups(allPickups.map(item => {
             if(item.id === pickupID)
             {
-                item.volunteerID = userID;
-                console.log(`Setting pickup ${pickupID} to volunteer ${userID}`);
+                if(role === "browse")
+                {
+                    item.volunteerID = userID;
+                }
+                else
+                {
+                    item.volunteerID = -1;
+                }
+                //console.log(`Setting pickup ${pickupID} to volunteer ${userID}`);
             }
             return item;
         }));
@@ -72,18 +78,24 @@ const PickupList = ({volunteerID, donorID, userID}) => {
     }
 
     const buttonAction = () => {
-        if(volunteerID >= -1) return applyVolunteerID;
-        else return startEdit;
+        if(role === "donor"){
+            return startEdit;
+        }
+        else {
+            return applyVolunteerID;
+        }
     }
 
     const buttonText = () => {
-        if(volunteerID === -1){
-            return "Sign Up";
+        if(role === "donor"){
+            return "Edit";
         }
-        else if(volunteerID > -1){
+        else if(role === "volunteer"){
             return "Cancel";
         }
-        else return "Edit";
+        else if(role === "browse"){
+            return "Sign Up";
+        }
     }
 
     return(
