@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from "react";
-import {Link, useParams, useHistory} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import * as Yup from "yup";
 import pickupSchema from "../data/pickupSchema";
 import StyledProfile from "./styled/StyledProfile";
 
 // view single pickup {props: pickup data, commit action}
 
-const PickupEdit = () => {
-    const [pickup, setPickup] = useState({date: "", type: "", qty: ""});
+const PickupEdit = ({allPickups, save, donorID}) => {
+    const [pickup, setPickup] = useState({date: "", type: "", qty: "", donorID: donorID});
     const [errors, setErrors] = useState({});
     const [buttonEnabled, setButtonEnabled] = useState(false);
 
     const {id} = useParams();
 
-    let history = useHistory();
-
     useEffect(() => {
-        if(id !== undefined)
+        if(id !== undefined && allPickups !== undefined)
         {
-            setPickupToExisting(id);
+            for(let i = 0; i < allPickups.length; i++)
+            {
+                if(id === allPickups[i].userID)
+                {
+                    setPickup(allPickups[i]);
+                }
+            }
         }
-    }, [id]);
-
-    const setPickupToExisting = id => {
-        // get API call for pickup #"id"
-        setPickup({id: id, date: "", type: `editing existing pickup ${id}`, qty: ""});
-    }
+    }, [id, allPickups]);
 
     const update = (name, value) => {
         setPickup({...pickup, [name]: value})
@@ -42,8 +41,8 @@ const PickupEdit = () => {
 
     const wrappedSave = event => {
         event.preventDefault();
-        // do API call
-        history.push("../active/");
+        //console.log("Save new pickup")
+        save(pickup, "../active/");
     }
 
     useEffect(() => {
