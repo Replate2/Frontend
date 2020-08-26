@@ -1,10 +1,12 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Profile from "./profile";
 import ProfileEdit from "./profileEdit";
 import PickupList from "./pickupList";
 import PickupEdit from "./pickupEdit";
 import { Switch, Route, useHistory } from "react-router-dom";
+
 import Nav from "./nav";
+//import Axios from "axios";
 
 // donor page [state: pickups, donor profile]
 //   view pickups (default view; "create new" button)
@@ -24,6 +26,16 @@ const Donor = () => {
         
         history.push("../profile/");
     };
+
+/*    useEffect(() => {
+        // test APIs
+        Axios.get("https://blue-replate.herokuapp.com/leftovers")
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+        Axios.get("https://blue-replate.herokuapp.com/locations")
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+    }, []);*/
 
     // useEffect to send a GET for data
 
