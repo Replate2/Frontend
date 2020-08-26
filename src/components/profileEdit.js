@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Link} from "react-router-dom";
 import * as Yup from "yup";
 import profileSchema from "../data/profileSchema";
+import StyledProfile from "./styled/StyledProfile";
 
 // edit profile {props: profile data, profile type (donor or volunteer), update state method, commit edit method}
 
@@ -34,26 +35,30 @@ const ProfileEdit = ({profile, saveProfile}) => {
 
     return(
         <form onSubmit={wrappedSave}>
-            <p>{profile.name /* can't be edited */}</p>
-            <label>
-                Display Name
-                <input name="displayName" value={profileForm.displayName} onChange={wrappedUpdate} />
-            </label>
-            <label>
-                Phone Number
-                <input name="phone" value={profileForm.phone} onChange={wrappedUpdate} />
-            </label>
-            {profile.address && <label>
-                Address (donors only)
-                <input name="address" value={profileForm.address} onChange={wrappedUpdate} />
-            </label>}
-            <div className="errorList">
-                <p>{profileErrors.displayName}</p>
-                <p>{profileErrors.phone}</p>
-                <p>{profileErrors.address}</p>
-            </div>
-            <button onClick={wrappedSave} disabled={!buttonEnabled}>Save</button>
-            <Link to="."><button>Cancel</button></Link>
+            <StyledProfile>
+                {/*<p>{profile.name}</p>*/}
+                <label>
+                    Display Name
+                    <input name="displayName" value={profileForm.displayName} onChange={wrappedUpdate} />
+                </label>
+                <label>
+                    Phone Number
+                    <input name="phone" value={profileForm.phone} onChange={wrappedUpdate} />
+                </label>
+                {profile.address && <label>
+                    Address (donors only)
+                    <input name="address" value={profileForm.address} onChange={wrappedUpdate} />
+                </label>}
+                <div className="errorList">
+                    <p>{profileErrors.displayName}</p>
+                    <p>{profileErrors.phone}</p>
+                    <p>{profileErrors.address}</p>
+                </div>
+                <div className="buttons">
+                    <button onClick={wrappedSave} disabled={!buttonEnabled}>Save</button>
+                    <Link to=".">Cancel</Link>
+                </div>
+            </StyledProfile>
         </form>
     );
 }
