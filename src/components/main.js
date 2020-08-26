@@ -26,7 +26,7 @@ const Main = ({role}) => {
     let history = useHistory();
 
     useEffect(() => {
-        console.log(defaultProfile(role));
+        //console.log(defaultProfile(role));
         setProfile(defaultProfile(role));
         setUserID(defaultProfile(role).id);
     }, [role]);

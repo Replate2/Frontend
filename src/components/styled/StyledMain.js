@@ -6,7 +6,7 @@ const StyledMain = styled.div`
     flex-direction: column;
     align-items: center;
 
-    padding-top: ${props => props.theme.margin.large};
+    /*padding-top: ${props => props.theme.margin.large};*/
 
     @media (max-width: 500px){
         width: 100%;
