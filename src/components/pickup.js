@@ -8,7 +8,7 @@ const Pickup = ({pickup, buttonAction, buttonText}) => {
 
     const wrappedButtonAction = () => {
         //console.log(`WBA ID=${pickup.id}`);
-        buttonAction(pickup.id);
+        buttonAction(pickup.pickupID);
     }
 
     return(
