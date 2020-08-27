@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Pickup from "./pickup";
+import data from "../data/data";
 
-// view pickups {props: filtered list of pickups; type of button to display, can edit}
-//   single pickup ("you know what nevermind" button)
+// view pickups [state: filtered pickup list, props: full pickup list, user role, user ID, button action]
+//   single pickup [props: pickup, button action, button label]
 
 const PickupList = ({allPickups, role, userID, update}) => {
     const [pickups, setPickups] = useState([]);
@@ -27,7 +28,7 @@ const PickupList = ({allPickups, role, userID, update}) => {
     }, [userID, role, allPickups]);
 
     const applyVolunteerID = (pickupID) => {
-        //todo: API call
+        // for volunteers: in the browse view, attach our ID to the targeted pickup; in the active view, remove our ID from it
         if(role === "browse"){
             update(pickupID, userID);
         }
@@ -37,9 +38,8 @@ const PickupList = ({allPickups, role, userID, update}) => {
     }
 
     const startEdit = (pickupID) => {
+        // for donors: switch to the editing view with a param that fills in details of the pickup
         //console.log(`Start editing #${pickupID}`)
-        // fill in the editing view state with the details of pickup #"pickupID"
-        // switch to the editing view
         history.push(`../edit/${pickupID}`);
     }
 
@@ -66,11 +66,13 @@ const PickupList = ({allPickups, role, userID, update}) => {
 
     return(
         <div>
-            {/*volunteerID}
-            {`${donorID}`*/}
-            {pickups.map(item =>
+            {pickups && pickups.length > 0 ?
+            pickups.map(item =>
                 <Pickup key={item.pickupID} pickup={item} buttonAction={buttonAction()} buttonText={buttonText()} />
-            )}
+            )
+            :
+            data.blankMessages[role]
+            }
         </div>
     );
 }

@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from "react";
 import {Link, useParams} from "react-router-dom";
 import * as Yup from "yup";
-import pickupSchema from "../data/pickupSchema";
 import StyledProfile from "./styled/StyledProfile";
+import pickupSchema from "../data/pickupSchema";
 
-// view single pickup {props: pickup data, commit action}
+// create pickup [state: form values, form errors; props: save action, donor ID]
+// edit pickup   [state: form values, form errors; props: save action, pickup list; params: pickup ID]
 
 const PickupEdit = ({allPickups, save, donorID}) => {
-    const [pickup, setPickup] = useState({date: "", type: "", qty: "", donorID: donorID});
+    const [pickup, setPickup] = useState({date: "", type: "", qty: "", donorID: donorID}); // default state will be overwritten if there is a param pointing to a valid pickupID
     const [errors, setErrors] = useState({});
     const [buttonEnabled, setButtonEnabled] = useState(false);
 
     const {id} = useParams();
 
     useEffect(() => {
+        //console.log(`load ID:${id}`);
         if(id !== undefined && allPickups !== undefined)
         {
+            //console.log(allPickups);
             for(let i = 0; i < allPickups.length; i++)
             {
-                if(id === allPickups[i].userID)
+                if(Number(id) === allPickups[i].pickupID) // note to self: Params ARE PASSED AS STRINGS, even when you don't want them to be. >:(
                 {
+                    //console.log(`load pickup #${allPickups[i]}`);
                     setPickup(allPickups[i]);
                 }
             }
@@ -41,7 +45,7 @@ const PickupEdit = ({allPickups, save, donorID}) => {
 
     const wrappedSave = event => {
         event.preventDefault();
-        //console.log("Save new pickup")
+        //console.log(`Save pickup#${pickup.pickupID}`)
         save(pickup, "../active/");
     }
 

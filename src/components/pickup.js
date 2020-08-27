@@ -1,7 +1,7 @@
 import React from "react";
 import StyledPickup from "./styled/StyledPickup";
 
-// view single pickup {props: pickup data, button type to show}
+// single pickup [props: pickup, button action, button label]
 
 const Pickup = ({pickup, buttonAction, buttonText}) => {
     // todo: fetch the vitals of the donor and volunteer from `donorID` and `volunteerID`

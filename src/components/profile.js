@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StyledProfile from "./styled/StyledProfile";
 
-// view profile {props: profile data, profile type (donor or volunteer)}
+// view profile [props: user profile]
 
 const Profile = ({profile}) => {
     return(

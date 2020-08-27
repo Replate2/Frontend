@@ -1,17 +1,18 @@
 import * as Yup from "yup";
+import data from "./data";
 
 const pickupSchema = Yup.object().shape({
     date: Yup
     .string()
     //.date()
-    .required("Please enter a date."),
+    .required(data.errors.noDate),
     qty: Yup
     .string()
     //.number()
-    .required("Please enter the quantity of food available."),
+    .required(data.errors.noQty),
     type: Yup
     .string()
-    .required("Please enter the type of food available."),
+    .required(data.errors.noType),
 });
 
 export default pickupSchema;
