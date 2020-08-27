@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {Link} from "react-router-dom";
 import * as Yup from "yup";
-import profileSchema from "../data/profileSchema";
 import StyledProfile from "./styled/StyledProfile";
+import profileSchema from "../data/profileSchema";
 
-// edit profile {props: profile data, profile type (donor or volunteer), update state method, commit edit method}
+// edit profile [state: form values, form errors; props: user profile, save action]
 
 const ProfileEdit = ({profile, saveProfile}) => {
     const [profileForm, setProfileForm] = useState(profile)

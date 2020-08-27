@@ -1,19 +1,15 @@
 import React, {useState, useEffect} from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
+import Axios from "axios";
 import Profile from "./profile";
 import ProfileEdit from "./profileEdit";
 import PickupList from "./pickupList";
 import PickupEdit from "./pickupEdit";
-import { Switch, Route, useHistory } from "react-router-dom";
 import Nav from "./nav";
 import StyledMain from "./styled/StyledMain";
-import Axios from "axios";
 import data from "../data/data";
 
-// donor page [state: pickups, donor profile]
-//   view pickups (default view; "create new" button)
-//     single pickup
-//   view/edit profile
-//   create/edit pickup
+// main page [state: pickup list, user profile; props: user role]
 
 const defaultProfile = role => {
     if(role === "donor") return 1;
@@ -52,6 +48,7 @@ const Main = ({role}) => {
     };
 
     const saveOrAddPickup = (newPickup, targetUrl) => {
+        // send data to API and amend pickup list on reply
         Axios.post(data.api.postPickup, newPickup)
         .then(response => {
             const result = [...allPickups];
@@ -60,25 +57,25 @@ const Main = ({role}) => {
             const toAdd = response.data;
             if(toAdd.pickupID === undefined){
                 toAdd.pickupID = response.data.id;
-            }
+            } // assumes the API adds an ID, but not necessarily the same ID each time, so only harvest it once
 
             //console.log(toAdd);
 
             for(let i = 0; i < result.length; i++)
             {
-                if(result[i].pickupID === toAdd.pickupID)
+                if(result[i].pickupID === toAdd.pickupID) // if this is an existing pickup, replace it, then exit
                 {
                     //console.log("replacing item");
                     result[i] = toAdd;
                     setAllPickups(result);
-                    if(targetUrl)
+                    if(targetUrl) // leave targetUrl blank for no redirect
                     {
                         history.push(targetUrl);
                     }
                     return;
                 }
             }
-            result.push(toAdd);
+            result.push(toAdd); // the result's pickupID didn't match any existing ones, so it must be new; add it
             setAllPickups(result);
             if(targetUrl)
             {
@@ -89,6 +86,8 @@ const Main = ({role}) => {
     }
 
     const updatePickupVolunteer = (pickupID, volunteerID) => {
+        // wrapper for saveOrAddPickup that changes volunteerID without needing the rest of the pickup to be passed down so far in props
+
         //console.log(`update pickup #${pickupID} with volunter #${volunteerID}`);
         for(let i = 0; i < allPickups.length; i++){
             if(allPickups[i].pickupID === pickupID){
@@ -99,7 +98,17 @@ const Main = ({role}) => {
         }
     }
 
-    return(
+// main page [state: pickup list, user profile; props: user role]
+//   navigation [props: user role]
+//   default - view pickups [state: filtered pickup list, props: full pickup list, user role, user ID, button action]
+//     single pickup [props: pickup, button action, button label]
+//   volunteer only - browse open pickups [state: filtered pickup list, props: full pickup list, user role, user ID, button action]
+//     single pickup [props: pickup, button action, button label]
+//   donor only - create/edit pickup [state: form values, form errors; props: save action, donor ID (if creating), pickup list (if editing); params: pickup ID (if editing)]
+//   view profile [props: user profile]
+//   edit profile [state: form values, form errors; props: user profile, save action]
+
+return(
         <StyledMain>
             <Nav role={role} />
             {profile ? 

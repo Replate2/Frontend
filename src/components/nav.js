@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import StyledNav from "./styled/StyledNav";
 
-// view profile {props: profile data, profile type (donor or volunteer)}
+// navigation [props: user role]
 
 const Nav = ({role}) => {
     return(
