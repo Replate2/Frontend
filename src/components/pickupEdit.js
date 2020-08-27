@@ -14,12 +14,15 @@ const PickupEdit = ({allPickups, save, donorID}) => {
     const {id} = useParams();
 
     useEffect(() => {
+        //console.log(`load ID:${id}`);
         if(id !== undefined && allPickups !== undefined)
         {
+            //console.log(allPickups);
             for(let i = 0; i < allPickups.length; i++)
             {
-                if(id === allPickups[i].userID)
+                if(Number(id) === allPickups[i].pickupID) // note to self: Params ARE PASSED AS STRINGS, even when you don't want them to be. >:(
                 {
+                    //console.log(`load pickup #${allPickups[i]}`);
                     setPickup(allPickups[i]);
                 }
             }
@@ -41,7 +44,7 @@ const PickupEdit = ({allPickups, save, donorID}) => {
 
     const wrappedSave = event => {
         event.preventDefault();
-        //console.log("Save new pickup")
+        //console.log(`Save pickup#${pickup.pickupID}`)
         save(pickup, "../active/");
     }
 
