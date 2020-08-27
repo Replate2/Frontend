@@ -79,15 +79,15 @@ const Main = ({role}) => {
     useEffect(() => {
         setAllProfiles(dummyProfiles);
         setAllPickups(dummyPickups);
-
         // if APIs become suitable in the future then fetch initial data from them
-        /*Axios.get(`https://blue-replate.herokuapp.com/users/${role === donor ? 1 : 0}`)
-        .then(response => setProfile(response.data))
-        .catch(error => console.log(error));*/
     }, []);
 
     useEffect(() => {
         setProfile(allProfiles[defaultProfile(role)])
+        // example get from API (not currently complete)
+        /*Axios.get(`https://blue-replate.herokuapp.com/users/${defaultProfile(role)}`)
+        .then(response => setProfile(response.data))
+        .catch(error => console.log(error));*/
     }, [role, allProfiles]);
 
     const saveProfile = (newProfile) => {

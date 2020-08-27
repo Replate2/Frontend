@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Pickup from "./pickup";
+import data from "../data/data";
 
 // view pickups {props: filtered list of pickups; type of button to display, can edit}
 //   single pickup ("you know what nevermind" button)
@@ -66,11 +67,13 @@ const PickupList = ({allPickups, role, userID, update}) => {
 
     return(
         <div>
-            {/*volunteerID}
-            {`${donorID}`*/}
-            {pickups.map(item =>
+            {pickups && pickups.length > 0 ?
+            pickups.map(item =>
                 <Pickup key={item.pickupID} pickup={item} buttonAction={buttonAction()} buttonText={buttonText()} />
-            )}
+            )
+            :
+            data.blankMessages[role]
+            }
         </div>
     );
 }
