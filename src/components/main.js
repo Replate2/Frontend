@@ -7,6 +7,7 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import Nav from "./nav";
 import StyledMain from "./styled/StyledMain";
 import Axios from "axios";
+import data from "../data/data";
 
 // donor page [state: pickups, donor profile]
 //   view pickups (default view; "create new" button)
@@ -19,56 +20,6 @@ const defaultProfile = role => {
     else return 0;
 }
 
-const dummyProfiles = [
-    {
-        userID: 0,
-        name: "volunteer",
-        displayName: "J. Random Volunteer",
-        phone: "(555) 098-7654",
-    },
-    {
-        userID: 1,
-        name: "jdoe",
-        displayName: "John Doe",
-        phone: "(123) 456-7890",
-        address: "1 Main St."
-    },
-    {
-        userID: 2,
-        name: "jdoe2",
-        displayName: "Jane Doe",
-        phone: "(555) 123-4567",
-        address: "2 Second St."
-    },
-]
-
-const dummyPickups = [
-    {
-        pickupID: 0,
-        donorID: 1,
-        volunteerID: -1,
-        date: "Tuesday",
-        type: "tacos",
-        qty: "100 lbs",
-    },
-    {
-        pickupID: 1,
-        donorID: 2,
-        volunteerID: -1,
-        date: "Saturday",
-        type: "salad",
-        qty: "50 lbs",
-    },
-    {
-        pickupID: 2,
-        donorID: 1,
-        volunteerID: 0,
-        date: "Friday",
-        type: "fried chicken",
-        qty: "150 lbs",
-    },
-];
-
 const Main = ({role}) => {
     const [profile, setProfile] = useState({});
     const [allProfiles, setAllProfiles] = useState([]);
@@ -77,22 +28,22 @@ const Main = ({role}) => {
     let history = useHistory();
 
     useEffect(() => {
-        setAllProfiles(dummyProfiles);
-        setAllPickups(dummyPickups);
+        setAllProfiles(data.dummy.profiles);
+        setAllPickups(data.dummy.pickups);
         // if APIs become suitable in the future then fetch initial data from them
     }, []);
 
     useEffect(() => {
         setProfile(allProfiles[defaultProfile(role)])
         // example get from API (not currently complete)
-        /*Axios.get(`https://blue-replate.herokuapp.com/users/${defaultProfile(role)}`)
+        /*Axios.get(`${data.api.getProfile}/${defaultProfile(role)}`)
         .then(response => setProfile(response.data))
         .catch(error => console.log(error));*/
     }, [role, allProfiles]);
 
     const saveProfile = (newProfile) => {
         // send data to API and amend profile on reply
-        Axios.post("https://reqres.in/api/users", newProfile)
+        Axios.post(data.api.postProfile, newProfile)
         .then(response => {
             setProfile(response.data);
             history.push("../profile/");
@@ -101,7 +52,7 @@ const Main = ({role}) => {
     };
 
     const saveOrAddPickup = (newPickup, targetUrl) => {
-        Axios.post("https://reqres.in/api/users", newPickup)
+        Axios.post(data.api.postPickup, newPickup)
         .then(response => {
             const result = [...allPickups];
             //console.log(result);
@@ -138,7 +89,7 @@ const Main = ({role}) => {
     }
 
     const updatePickupVolunteer = (pickupID, volunteerID) => {
-        console.log(`update pickup #${pickupID} with volunter #${volunteerID}`);
+        //console.log(`update pickup #${pickupID} with volunter #${volunteerID}`);
         for(let i = 0; i < allPickups.length; i++){
             if(allPickups[i].pickupID === pickupID){
                 const modifiedPickup = {...allPickups[i], volunteerID: volunteerID};
